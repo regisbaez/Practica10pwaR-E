@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Rentals</title>
+
+    <link rel="stylesheet" type="text/css" th:href="@{css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" th:href="@{css/sb-admin.css}"/>
+
+    <!-- Page level plugin CSS-->
+    <link th:href="@{css/dataTables.bootstrap4.css}" rel="stylesheet">
+
+</head>
+
+<body id="page-top">
+
+<nav class="navbar navbar-expand static-top navbar-dark bg-dark static-top" navbar-dark bg-dark>
+    <a class="navbar-brand mr-1" href="">Rentals</a>
+    <br>
+
+
+
+
+    <!-- Navbar -->
+
+</nav>
+
+<div id="wrapper">
+
+    <!-- Sidebar -->
+    <ul class="sidebar navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" href="/admin">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>Dashboard</span>
+            </a>
+
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="/indexUser">
+                <i class="fas fa-fw fa-user"></i>
+                <span th:text="#{cliente}"></span></a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="/indexEquipos">
+                <i class="fas fa-fw fa-wrench"></i>
+                <span th:text="#{equipo}"></span></a>
+            <a class="nav-link" href="/indexFamilia">
+                <i class="fas fa-fw fa-users"></i>
+                <span th:text="#{familia}"></span></a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="/indexAlquiler">
+                <i class="fas fa-fw fa-boxes"></i>
+                <span th:text="#{alquiler}">Alquiler</span></a>
+            <a class="nav-link" href="/indexEntrega">
+                <i class="fas fa-fw fa-receipt"></i>
+                <span th:text="#{entrega}"></span></a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="/historial">
+                <i class="fas fa-fw fa-history"></i>
+                <span th:text="#{historial}"></span></a>
+        </li>
+
+    </ul>
+
+
+    <div id="content-wrapper">
+
+        <div class="container-fluid">
+
+
+
+            <!-- Page Content -->
+            <h1 th:text="#{historial}">Historial</h1>
+            <hr>
+            <div class="container">
+                <h3 th:text="#{cli}">Cliente:</h3>
+
+                <form class="form-inline" th:action="@{/historial}" method="POST">
+
+                            <select class="form-control col-10" th:name="selectClient">
+                                <option th:text="#{cli}">...</option>
+                                <th:block th:each="client : ${clientes}">
+                                    <option th:value="${client.id}" th:text="${client.name}"></option>
+                                </th:block>
+                            </select>
+                        <input type="submit" th:value="#{buscar}" class="form-control col" />
+                </form>
+            </div>
+
+            <h5><strong th:text="${Cliente}"></strong></h5>
+            <h6 th:text="#{alquiler}"></h6>
+            <div class="container">
+                <table class="table table-sm">
+                    <tr>
+                        <th th:text="#{fecha}">Fecha Registrada</th>
+                        <th th:text="#{fechaEntrega}">Fecha de Entrega</th>
+                        <th th:text="#{dias}">Dias</th>
+                        <th th:text="#{equipo}">Equipos</th>
+                    </tr>
+                    <th:block th:each="alquiler : ${rentals}">
+
+                        <tr>
+                            <td th:text="${alquiler.date}">...</td>
+                            <td th:text="${alquiler.deliveryDate}">...</td>
+                            <td th:text="${alquiler.diasRent}">...</td>
+                            <td>
+                                <dl>
+                                    <th:block th:each="equip : ${alquiler.equipRental}">
+
+                                        <dd th:text="${equip.equip.name} + ' - '+${equip.cantidadRentada} +' Stock'"> </dd>
+
+                                    </th:block>
+                                </dl>
+                            </td>
+                        </tr>
+                    </th:block>
+                </table>
+            </div>
+
+        </div>
+        <!-- /.container-fluid -->
+
+        <!-- Sticky Footer -->
+        <footer class="sticky-footer">
+            <div class="container my-auto">
+                <div class="copyright text-center my-auto">
+
+                </div>
+            </div>
+        </footer>
+
+    </div>
+    <!-- /.content-wrapper -->
+
+</div>
+<!-- /#wrapper -->
+
+<!-- Bootstrap core JavaScript-->
+<script th:src="@{vendor/jquery/jquery.min.js}"></script>
+<script th:src="@{js/bootstrap.bundle.min.js}"></script>
+
+<!-- Core plugin JavaScript-->
+<script th:src="@{js/jquery.easing.min.js}"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#es").click(function () {
+            var selectedOption = $(this).attr('id');
+            window.location.replace('historial?lang=' + selectedOption);
+
+        });
+        $("#en").click(function () {
+            var selectedOption = $(this).attr('id');
+            window.location.replace('historial?lang=' + selectedOption);
+
+        });
+    });
+</script>
+
+<!-- Custom scripts for all pages-->
+<script th:src="@{js/sb-admin.min.js}"></script>
+
+</body>
+
+</html>
