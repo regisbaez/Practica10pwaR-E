@@ -30,8 +30,8 @@ public class UserDetailsServiceImp implements UserDetailsService {
         User appUser = userRepository.findByUsername(username);
 
         if (appUser == null) {
-            System.out.println("No se encontro usuario! " + username);
-            throw new UsernameNotFoundException("Usuario " + username + " no esta en la BD");
+            System.out.println("Usuario no encontrado " + username);
+            throw new UsernameNotFoundException("Usuario " + username + " no se encuentra registrado");
         }
 
         Set<GrantedAuthority> roles = new HashSet<GrantedAuthority>();
