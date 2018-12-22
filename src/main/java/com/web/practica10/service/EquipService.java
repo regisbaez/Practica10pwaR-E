@@ -24,7 +24,7 @@ public class EquipService {
 
     @Transactional
     public void deleteEquip(Equip equip){
-
+//test
         equip.setEnabled(false);
         equipRepository.save(equip);
     }
